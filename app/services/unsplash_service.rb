@@ -19,7 +19,7 @@ class UnsplashService
   end
 
   def connection
-    Faraday.new(url:'https://api.unsplash.com', params: {"client_id" => "EF3XCM-B_GVNzvSJL-tVaaXIFOgGxl99QvZTTIO0Ve8"})
+    Faraday.new(url:'https://api.unsplash.com', params: {"client_id" => "YO-apZC1IRb24YO_ZqUzjUt-fV16Iv6e68NVY-7TC6Q"})
 
   end
 end
