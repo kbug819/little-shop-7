@@ -1,4 +1,6 @@
 <center><h1><%= @merchant.name %> Discounts</h1></center>
+<center><%= button_to "Add a New Discount", "/merchants/#{@merchant.id}/discounts/new", method: :get %></center>
+
 <div class="bulk_discounts">
 <div class="table-container">
 <table class="table-style">
