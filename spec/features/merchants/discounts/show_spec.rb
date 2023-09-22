@@ -12,15 +12,16 @@ RSpec.feature "the merchant discounts index page" do
       expect(page).to have_button("View Discounts")
       click_button("View Discounts")
       expect(page).to have_current_path("/merchants/#{merchant_1.id}/discounts")
-      within ".bulk_discounts" do
+      within "tr#discount-#{discount_1.id}" do
         expect(page).to have_content("#{discount_1.percentage}% off #{discount_1.quantity} items")
-        expect(page).to have_content("#{discount_2.percentage}% off #{discount_2.quantity} items")
         expect(page).to have_link("#{discount_1.percentage}% off #{discount_1.quantity} items")
+      end
+      within "tr#discount-#{discount_2.id}" do
+        expect(page).to have_content("#{discount_2.percentage}% off #{discount_2.quantity} items")
         expect(page).to have_link("#{discount_2.percentage}% off #{discount_2.quantity} items")
         click_link("#{discount_2.percentage}% off #{discount_2.quantity} items")
-        expect(page).to have_current_path("/merchants/#{merchant_1.id}/discounts/#{discount_2.id}")
-
       end
+      expect(page).to have_current_path("/merchants/#{merchant_1.id}/discounts/#{discount_2.id}")
     end
   end
 end

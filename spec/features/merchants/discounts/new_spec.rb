@@ -1,8 +1,8 @@
 require "rails_helper"
 
-RSpec.feature "the merchant discounts index page" do
-  describe 'when visiting /merchants/merchant_id/invoices' do
-    it 'US1 - solo project - displays a list of merchant discounts' do
+RSpec.feature "the merchant discount new page" do
+  describe 'when visiting /merchants/merchant_id/discounts/new' do
+    it 'US2 - solo project - creates form to add a discount' do
       merchant_1 = Merchant.create!(name: "Bracelets 'n Stuff")
       discount_1 = Discount.create!(percentage: 20, quantity: 10, merchant: merchant_1)
       discount_2 = Discount.create!(percentage: 30, quantity: 15, merchant: merchant_1)
@@ -19,8 +19,12 @@ RSpec.feature "the merchant discounts index page" do
       fill_in("Quantity", with: "10")
       click_button("Submit")
       expect(page).to have_current_path("/merchants/#{merchant_1.id}/discounts")
-      expect(page).to have_content("#{discount_1.percentage}% off #{discount_1.quantity} items")
-      expect(page).to have_content("#{discount_2.percentage}% off #{discount_2.quantity} items")
+      within "tr#discount-#{discount_1.id}" do
+        expect(page).to have_content("#{discount_1.percentage}% off #{discount_1.quantity} items")
+      end
+      within "tr#discount-#{discount_2.id}" do
+        expect(page).to have_content("#{discount_2.percentage}% off #{discount_2.quantity} items")
+      end
       expect(page).to have_content("25% off 10 items")
     end
   end
