@@ -13,3 +13,5 @@ Invoice.destroy_all
 Transaction.destroy_all
 InvoiceItem.destroy_all
 Rake::Task["load_csv:all"].invoke
+discount_1 = Discount.create!(percentage: 20, quantity: 10, merchant_id: 1)
+discount_1 = Discount.create!(percentage: 10, quantity: 5, merchant_id: 1)
