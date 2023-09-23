@@ -1,9 +1,9 @@
 <h1><center><%= @merchant.name %> Dashboard</center></h1>
-<img src= <%= @random_photo.url[:thumb] %>>
+# <img src= <%= @random_photo.url[:thumb] %>>
 
 <p><center><%= button_to "View Items", "/merchants/#{@merchant.id}/items", method: :get %></center></p>
 <center><%= button_to "View Invoices", "/merchants/#{@merchant.id}/invoices", method: :get %></center>
-<p><center><%= button_to "View Discounts", "/merchants/#{@merchant.id}/discounts", method: :get %></center></p>
+<p><center><%= button_to "View Discounts", merchant_discounts_path(@merchant.id), method: :get %></center></p>
 <div class= "table-container">
 <section id="top5-customers">
 <table class="table-style">

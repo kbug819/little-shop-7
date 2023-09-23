@@ -11,11 +11,13 @@ Rails.application.routes.draw do
   patch "/merchants/:merchant_id/invoices/:invoice_id/:item_id", to: "merchants/invoices#update", as: :merchant_invoice_item
   get "/merchants/:merchant_id/invoices/:invoice_id", to: "merchants/invoices#show", as: :merchant_invoice
   
-  get "/merchants/:merchant_id/discounts", to: "merchants/discounts#index", as: :merchant_discounts
-  get "/merchants/:merchant_id/discounts/new", to: "merchants/discounts#new", as: :new_merchant_discount
-  get "/merchants/:merchant_id/discounts/:discount_id", to: "merchants/discounts#show", as: :merchant_discount
-  post "/merchants/:merchant_id/discounts", to: "merchants/discounts#create"
-  delete "/merchants/:merchant_id/discounts", to: "merchants/discounts#destroy"
+  # get "/merchants/:merchant_id/discounts", to: "merchants/discounts#index", as: :merchant_discounts
+  # get "/merchants/:merchant_id/discounts/new", to: "merchants/discounts#new", as: :new_merchant_discount
+  # get "/merchants/:merchant_id/discounts/:discount_id", to: "merchants/discounts#show", as: :merchant_discount
+  # post "/merchants/:merchant_id/discounts", to: "merchants/discounts#create"
+  # delete "/merchants/:merchant_id/discounts", to: "merchants/discounts#destroy"
+  # get "/merchants/:merchant_id/discounts/:discount_id/edit", to: "merchants/discounts#edit"
+  # patch "/merchants/:merchant_id/discounts", to: "merchants/discounts#update"
   get "/admin", to: "admin#index"
   
   namespace :admin do 
@@ -23,14 +25,14 @@ Rails.application.routes.draw do
     resources :invoices, only: [:index, :show, :update]
   end
 
-  # resources :merchants, only: [:show] do
+  resources :merchants, only: [] do
   #   resources :dashboard
   #   resources :invoices
-  #   resources :discounts
+    resources :discounts, controller: "merchants/discounts"
   #   resources :items do
   #     resources :status
   #   end
-  # end
+  end
   
   # resources :merchants, only: [] do
   #   collection do
