@@ -23,16 +23,25 @@ class Invoice < ApplicationRecord
     invoice_items.sum("unit_price * quantity") / 100.0
   end
 
-  def applicable_discount
-    select('discounts.*, invoice_items.*, sum(invoice_items.quantity * invoice_items.unit_price) as total_price, 
-    (sum(invoice_items.quantity * invoice_items.unit_price) * discounts.percentage / 100) as discount_total_off, 
-    sum(invoice_items.quantity * invoice_items.unit_price) - (sum(invoice_items.quantity * invoice_items.unit_price) * discounts.percentage / 100) as discounted_total')
-    .where('invoice_items.quantity >= discounts.quantity')
-    .group('discounts.id, invoice_items.id')
-    .order('discounts.percentage asc')
-
-
+  def discounted_revenue
+    invoice_items.each.sum do |item|
+      if !item.available_discounts.empty?
+        item.available_discounts[0].discounted_total
+      else
+        item.quantity * item.unit_price
+      end
+    end
   end
+
+  # def applicable_discount
+  #   select('discounts.*, invoice_items.*, sum(invoice_items.quantity * invoice_items.unit_price) as total_price, 
+  #   (sum(invoice_items.quantity * invoice_items.unit_price) * discounts.percentage / 100) as discount_total_off, 
+  #   sum(invoice_items.quantity * invoice_items.unit_price) - (sum(invoice_items.quantity * invoice_items.unit_price) * discounts.percentage / 100) as discounted_total')
+  #   .where('invoice_items.quantity >= discounts.quantity')
+  #   .group('discounts.id, invoice_items.id')
+  #   .order('discounts.percentage asc')
+
+
 end
 
 
