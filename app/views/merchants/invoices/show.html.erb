@@ -15,6 +15,7 @@
       <th>Quantity</th>
       <th>Price</th>
       <th>Status</th>
+      <th>Discount Applied (if any) </th>
       <th>Change Status</th>
     </tr>
   </thead>
@@ -25,6 +26,12 @@
         <td><%= invoice_item.quantity %></td>
         <td><%= number_to_currency(invoice_item.unit_price / 100.0) %></td>
         <td><%= invoice_item.status %></td>  
+        <td><% if !invoice_item.available_discounts.empty? %>
+              <center><%= link_to "#{invoice_item.available_discounts.first.percentage} off #{invoice_item.available_discounts.first.quantity} items", merchant_discount_path(@merchant, invoice_item.available_discounts.first.id) %></center> 
+              <% else %>
+              <%= "" %>
+              <% end %>
+              </td>  
         <td><%= form_with url: merchant_invoice_item_path(@merchant, @invoice, invoice_item.item_id), method: :patch, data:{turbo: false} do |f| %>
             <%= select_tag :item_status, options_for_select([['packaged', 'packaged'], ['pending', 'pending'], ['shipped', 'shipped']], invoice_item.status) %>
             <%= f.submit 'Update Item Status' %>
@@ -35,3 +42,4 @@
   </div>
 
   <p> Total Revenue of Invoice: <%= number_to_currency(@invoice.total_revenue) %> </p>
+  <p> Total Discounted Revenue: <%= number_to_currency(@invoice.discounted_revenue / 100.0) %> </p>
