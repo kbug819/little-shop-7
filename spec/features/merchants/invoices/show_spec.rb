@@ -93,4 +93,42 @@ RSpec.feature "the merchant invoices show page" do
       expect(page).to have_content("Total Discounted Revenue: $82.50")
     end
   end
+
+  describe 'when visiting /merchants/merchant_id/invoices' do
+    it 'US7 - solo project - shows a link to the bulk discount applied next to each applicable item' do
+      customer_1 = Customer.create(first_name: "Joey", last_name:"One")
+
+      merchant_1 = Merchant.create(name: "merchant1")
+      merchant_2 = Merchant.create(name: "merchant2")
+
+      discount_1 = BulkDiscount.create(percentage: 20, quantity: 10, merchant: merchant_1)
+      discount_2 = BulkDiscount.create(percentage: 10, quantity: 5, merchant: merchant_1)
+      item_1 = Item.create(name: "item1", description: "1", unit_price: 2145, merchant: merchant_1)
+      item_2 = Item.create(name: "item2", description: "1", unit_price: 2145, merchant: merchant_1)
+      item_3 = Item.create(name: "item2", description: "1", unit_price: 2145, merchant: merchant_2)
+      invoice_1 = Invoice.create(customer: customer_1, status: 0)
+      
+      invoice_item_1 = InvoiceItem.create(item: item_1, invoice: invoice_1, quantity: 5, unit_price: 500, status: 0)
+      invoice_item_2 = InvoiceItem.create(item: item_2, invoice: invoice_1, quantity: 10, unit_price: 500, status: 1)
+      invoice_item_3 = InvoiceItem.create(item: item_2, invoice: invoice_1, quantity: 1, unit_price: 1000, status: 1)
+      invoice_item_4 = InvoiceItem.create(item: item_2, invoice: invoice_1, quantity: 1, unit_price: 1000, status: 1)
+
+      visit merchant_invoice_path(merchant_1, invoice_1)
+
+      within "#invoice-item-#{invoice_item_1.id}" do
+        expect(page).to have_link("10% off 5 items")
+      end 
+      within "#invoice-item-#{invoice_item_2.id}" do
+        expect(page).to have_link("20% off 10 items")
+      end 
+      within "#invoice-item-#{invoice_item_3.id}" do
+        expect(page).to_not have_link("20% off 10 items")
+        expect(page).to_not have_link("10% off 5 items")
+      end 
+      within "#invoice-item-#{invoice_item_4.id}" do
+        expect(page).to_not have_link("20% off 10 items")
+        expect(page).to_not have_link("10% off 5 items")
+      end 
+    end
+  end
 end

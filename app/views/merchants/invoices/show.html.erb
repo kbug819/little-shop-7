@@ -27,7 +27,7 @@
         <td><%= number_to_currency(invoice_item.unit_price / 100.0) %></td>
         <td><%= invoice_item.status %></td>  
         <td><% if !invoice_item.available_discounts.empty? %>
-              <center><%= link_to "#{invoice_item.available_discounts.first.percentage} off #{invoice_item.available_discounts.first.quantity} items", merchant_bulk_discount_path(@merchant, invoice_item.available_discounts.first.id) %></center> 
+              <center><%= link_to "#{invoice_item.available_discounts.first.percentage}% off #{invoice_item.available_discounts.first.quantity} items", merchant_bulk_discount_path(@merchant, invoice_item.available_discounts.first.id) %></center> 
               <% else %>
               <%= "" %>
               <% end %>
