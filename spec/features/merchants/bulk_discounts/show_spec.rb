@@ -46,4 +46,6 @@ RSpec.feature "the merchant discounts show page" do
       expect(page).to have_content("25% off 10")
     end
   end
+
+  
 end
