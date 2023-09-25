@@ -20,9 +20,9 @@ RSpec.describe Invoice, type: :model do
       merchant_1 = Merchant.create(name: "merchant1")
       merchant_2 = Merchant.create(name: "merchant2")
 
-      discount_1 = Discount.create(percentage: 20, quantity: 10, merchant: merchant_1)
-      discount_2 = Discount.create(percentage: 30, quantity: 15, merchant: merchant_1)
-      discount_3 = Discount.create(percentage: 15, quantity: 15, merchant: merchant_1)
+      discount_1 = BulkDiscount.create(percentage: 20, quantity: 10, merchant: merchant_1)
+      discount_2 = BulkDiscount.create(percentage: 30, quantity: 15, merchant: merchant_1)
+      discount_3 = BulkDiscount.create(percentage: 15, quantity: 15, merchant: merchant_1)
       item_1 = Item.create(name: "item1", description: "1", unit_price: 2145, merchant: merchant_1)
       item_2 = Item.create(name: "item2", description: "1", unit_price: 2145, merchant: merchant_1)
       item_3 = Item.create(name: "item2", description: "1", unit_price: 2145, merchant: merchant_2)

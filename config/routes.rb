@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   resources :merchants, only: [] do
   #   resources :dashboard
   #   resources :invoices
-    resources :discounts, controller: "merchants/discounts"
+    resources :bulk_discounts, controller: "merchants/bulk_discounts"
   #   resources :items do
   #     resources :status
   #   end

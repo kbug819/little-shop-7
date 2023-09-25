@@ -1,0 +1,3 @@
+<center><h1><%= @discount.percentage %>% off <%= @discount.quantity %>
+
+<%= button_to "Edit Discount", "/merchants/#{@merchant.id}/bulk_discounts/#{@discount.id}/edit", method: :get %>
