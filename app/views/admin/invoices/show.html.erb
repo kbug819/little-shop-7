@@ -11,6 +11,7 @@
 <p><b>Status:</b> <%= @invoice.status.capitalize %></p>
 <p><b>Created on:</b> <%= @invoice.created_at.strftime("%A, %B %d, %Y") %>
 <p><b>Total Revenue:</b> <%= number_to_currency(@invoice.total_revenue) %>
+<p><b>Total Revenue after Discounts Applied:</b> <%= number_to_currency(@invoice.discounted_revenue / 100.0) %>
 
 
 <h4>Customer:</h4>

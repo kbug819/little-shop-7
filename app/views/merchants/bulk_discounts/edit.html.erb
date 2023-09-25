@@ -1,6 +1,6 @@
 <h1><center>Edit Discount for: <%= @discount.percentage %>% off <%= @discount.quantity %></center></h1>
 
-<%= form_with url: "/merchants/#{@merchant.id}/discounts/#{@discount.id}", method: :patch do |f|%>
+<%= form_with url: "/merchants/#{@merchant.id}/bulk_discounts/#{@discount.id}", method: :patch do |f|%>
   <%= f.label :percentage %>
   <%= f.text_field :percentage, value: "#{@discount.percentage}" %>
   <%= f.label :quantity %>

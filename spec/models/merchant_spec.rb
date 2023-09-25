@@ -4,7 +4,7 @@ include ActionView::Helpers::NumberHelper
 RSpec.describe Merchant, type: :model do
   describe "relationships" do
     it { should have_many :items }
-    it { should have_many :discounts }
+    it { should have_many :bulk_discounts }
   end
 
   describe "validations" do
