@@ -29,6 +29,8 @@ Rails.application.routes.draw do
   #   resources :dashboard
   #   resources :invoices
     resources :bulk_discounts, controller: "merchants/bulk_discounts"
+    resources :holiday_discounts, controller: "merchants/holiday_discounts"
+    
   #   resources :items do
   #     resources :status
   #   end
