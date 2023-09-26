@@ -6,6 +6,8 @@ RSpec.describe Invoice, type: :model do
     it { should have_many :invoice_items }
     it { should have_many :transactions }
     it { should have_many(:items).through(:invoice_items) }
+    it { should have_many(:merchants).through(:items) }
+    it { should have_many(:bulk_discounts).through(:merchants) }
   end
 
   describe 'validations' do
@@ -83,6 +85,13 @@ RSpec.describe Invoice, type: :model do
       expect(invoice_4.applicable_discount).to eq(285)
       expect(invoice_5.applicable_discount).to eq(540)
       expect(invoice_6.applicable_discount).to eq(690)
+
+      # expect(invoice_1.calculated_discount[0].discount_total_off).to eq(50)
+      # expect(invoice_2.calculated_discount[0].discount_total_off).to eq(0)
+      # expect(invoice_3.calculated_discount[0].discount_total_off).to eq(20)
+      # expect(invoice_4.calculated_discount[0].discount_total_off).to eq(285)
+      # expect(invoice_5.calculated_discount[0].discount_total_off).to eq(540)
+      # expect(invoice_6.calculated_discount[0].discount_total_off).to eq(690)
     end
   end
 

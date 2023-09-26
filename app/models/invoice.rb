@@ -36,7 +36,7 @@ class Invoice < ApplicationRecord
   def possible_discounts
   BulkDiscount
   .select('bulk_discounts.*, invoice_items.*, sum((invoice_items.quantity * invoice_items.unit_price) * bulk_discounts.percentage / 100) as discount_total_off')
-  .joins(merchant: { items: :invoice_items })
+  .joins(:invoice_items)
     .where('invoice_items.invoice_id = ?', self.id)
     .where('bulk_discounts.percentage = (SELECT MAX(bulk_discounts.percentage) 
           FROM bulk_discounts 
@@ -50,6 +50,16 @@ class Invoice < ApplicationRecord
   def applicable_discount
     self.possible_discounts.sum { |discount| discount.discount_total_off }
   end
+
+  # def calculated_discount
+  #   self.invoice_items.joins(:bulk_discounts).select('invoice_items.*, sum((invoice_items.quantity * invoice_items.unit_price) * bulk_discounts.percentage / 100) as discount_total_off')
+  #   .where('invoice_items.invoice_id = ? AND invoice_items.quantity >= bulk_discounts.quantity', self.id)
+  #   .where('bulk_discounts.percentage = (SELECT MAX(bulk_discounts.percentage) 
+  #         FROM bulk_discounts 
+  #         WHERE bulk_discounts.merchant_id = merchants.id 
+  #         AND bulk_discounts.quantity <= invoice_items.quantity)')
+  #   .group('invoice_items.id')
+  # end
 end
 
 

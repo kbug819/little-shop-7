@@ -20,5 +20,11 @@
   </tbody>
 </table>
 </div>
+
+<h1>Upcoming Holidays</h1>
+<% @dates.each do |holiday| %>
+  <p><%= holiday.date %> - <%= holiday.name %></p>
+  <% end %>
+
 </div>
 
