@@ -13,18 +13,30 @@
     <tr id="discount-<%= discount.id %>">          
         <td><%= link_to "#{discount.percentage}% off #{discount.quantity} items", merchant_bulk_discount_path(@merchant, discount.id), method: :get %></td>
         <td><%= button_to "Delete Discount", "/merchants/#{@merchant.id}/bulk_discounts/#{discount.id}", method: :delete %>
-
-
       </tr>
     <% end %>
   </tbody>
 </table>
 </div>
 
-<h1>Upcoming Holidays</h1>
+<center><h1>Upcoming Holidays</h1></center>
+<div class="table-container">
+<table class="table-style">
+<thead>
+<tr>
+<th>Upcoming Holidays</th>
+</tr>
+</thead>
+<tbody>
 <% @dates.each do |holiday| %>
-  <p><%= holiday.date %> - <%= holiday.name %></p>
+  <tr id="holiday_discount-<%= holiday.date %>">          
+    <td><%= holiday.date %> - <%= holiday.name %></td>
+    <td><%= button_to "Add a New Holiday Discount", "/merchants/#{@merchant.id}/holiday_discounts/new", method: :get %></td>
+    </tr>
   <% end %>
+  </tbody>
+  </table>
+  </div>
 
-</div>
+
 
